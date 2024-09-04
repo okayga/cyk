@@ -14,7 +14,7 @@ rule[i][j] for j = 0, . . . , n − 1 (and one can loop over all rules by additi
 
 public abstract class Grammar {
      private Map<Character, List<String>> terminalRules;
-     private List<int[]>[] nonterminalRules;
+     private List<int[]>[] nonterminalRules; // bit odd list, open to change
      private Map<String, Integer> nonterminalToInt;
      private Map<Integer, String> intToNonterminal;
 
