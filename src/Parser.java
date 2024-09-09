@@ -15,16 +15,25 @@ measurements support the same conclusions.
 
 public class Parser {
     private final Grammar theGrammar;
+    private final char[] charArray;
 
     public Parser(Grammar grammar) {
-        this.theGrammar = grammar;
+        theGrammar = grammar;
     }
 
-    public boolean parseNaive() {
-
+    private parse(String string) {
+        charArray = string.toCharArray();
+        parseNaive(S, 0, n);
     }
 
-    public boolean parseBU() {
+    public boolean parseNaive(int S, int i, int j) {
+        charArray = theString.toCharArray();
+        if (i == j - 1) {
+            return()
+        }
+    }
+
+    public boolean parseBU(int S, int i, int j) {
 
     }
 
