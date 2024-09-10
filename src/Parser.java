@@ -13,24 +13,47 @@ later on be compared to the physical time measurements in order to see whether t
 measurements support the same conclusions.
 */
 
+import java.util.List;
+
 public class Parser {
     private final Grammar theGrammar;
-    private final char[] charArray;
+    private char[] charArray = null;
+    private int counter;
 
     public Parser(Grammar grammar) {
         theGrammar = grammar;
+        counter = 0;
     }
 
-    private parse(String string) {
+    private void parse(String string) {
         charArray = string.toCharArray();
-        parseNaive(S, 0, n);
+        int n = charArray.length;
+        int S = theGrammar.getNonterminalInt(theGrammar.getFirstNonterminal());
+        if (charArray != null && n != 0) {
+            parseNaive(S, 0, n);
+        }
     }
 
-    public boolean parseNaive(int S, int i, int j) {
-        charArray = theString.toCharArray();
+    public boolean parseNaive(int A, int i, int j) {
+        counter = 0;
         if (i == j - 1) {
-            return()
+            char terminal = charArray[i];
+            List<String> terminalRules = theGrammar.getTerminalRules(terminal);
+            return terminalRules.contains(theGrammar.getNonterminalString(A));
+        } else {
+            List<int[]> nonterminalRules = theGrammar.getNonterminalRules(A);
+            for (int[] rule : nonterminalRules) {
+                int B = rule[0];
+                int C = rule[1];
+                for (int k = i + 1; k < j; k++) {
+                    counter++;
+                    if (parseNaive(B, i, k) && parseNaive(C, k, j)) {
+                        return true;
+                    }
+                }
+            }
         }
+        return false;
     }
 
     public boolean parseBU(int S, int i, int j) {

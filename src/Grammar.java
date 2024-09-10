@@ -13,10 +13,11 @@ rule[i][j] for j = 0, . . . , n − 1 (and one can loop over all rules by additi
 */
 
 public abstract class Grammar {
-     private Map<Character, List<String>> terminalRules;
-     private List<int[]>[] nonterminalRules; // bit odd list, open to change
-     private Map<String, Integer> nonterminalToInt;
-     private Map<Integer, String> intToNonterminal;
+     private final Map<Character, List<String>> terminalRules;
+     private final List<int[]>[] nonterminalRules;
+     private final Map<String, Integer> nonterminalToInt;
+     private final Map<Integer, String> intToNonterminal;
+     private String firstNonterminal;
 
     public Grammar(Set<String> nonterminals, Set<Character> terminals) {
         terminalRules = new HashMap<>();
@@ -26,6 +27,9 @@ public abstract class Grammar {
 
         int index = 0;
         for (String nonterminal : nonterminals) {
+            if (index == 0) {
+                firstNonterminal = nonterminal;
+            }
             nonterminalToInt.put(nonterminal, index);
             intToNonterminal.put(index, nonterminal);
             nonterminalRules[index] = new ArrayList<>();
@@ -59,5 +63,9 @@ public abstract class Grammar {
 
     public String getNonterminalString(int nonterminal) {
         return intToNonterminal.get(nonterminal);
+    }
+
+    public String getFirstNonterminal() {
+        return firstNonterminal;
     }
 }
