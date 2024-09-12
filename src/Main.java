@@ -14,6 +14,23 @@ sequent call of nextElement(). It pays off to think a while about a convenient i
 type of task.
 */
 
-public class Main {
+import java.io.File;
 
+public class Main {
+    public static void main(String[] args) {
+        String filename = args[0];
+        if (filename.isBlank()) {
+            System.err.println("Please provide the file name for the file containing the grammar in CNF");
+            System.exit(1);
+        }
+
+        File grammarFile = new File(filename);
+        if (!grammarFile.exists() || !grammarFile.isFile()) {
+            System.err.println("The provided filename does not exist or is not a file");
+            System.exit(1);
+        }
+
+
+    }
 }
+

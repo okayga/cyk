@@ -18,11 +18,15 @@ import java.util.List;
 public class Parser {
     private final Grammar theGrammar;
     private char[] charArray = null;
-    private int counter;
+    private int counterNaive;
+    private int counterBU;
+    private int counterTD;
 
     public Parser(Grammar grammar) {
         theGrammar = grammar;
-        counter = 0;
+        counterNaive = 0;
+        counterBU = 0;
+        counterNaive = 0;
     }
 
     private void parse(String string) {
@@ -30,14 +34,13 @@ public class Parser {
         int n = charArray.length;
         int S = theGrammar.getNonterminalInt(theGrammar.getFirstNonterminal());
         if (charArray != null && n != 0) {
-            counter = 0;
             parseNaive(S, 0, n);
         }
     }
 
     public boolean parseNaive(int S, int i, int j) {
         if (i == j - 1) {
-            counter++;
+            counterNaive++;
             char terminal = charArray[i];
             List<String> terminalRules = theGrammar.getTerminalRules(terminal);
             return terminalRules.contains(theGrammar.getNonterminalString(S));
@@ -47,7 +50,7 @@ public class Parser {
                 int B = rule[0];
                 int C = rule[1];
                 for (int k = i + 1; k < j; k++) {
-                    counter++;
+                    counterNaive++;
                     if (parseNaive(B, i, k) && parseNaive(C, k, j)) {
                         return true;
                     }
@@ -70,7 +73,7 @@ public class Parser {
                     for (int A = 0; A < theGrammar.getAllNonterminalRules().length; A++) {
                         List<int[]> nonterminalRules = theGrammar.getNonterminalRules(A);
                         for (int[] rule : nonterminalRules) {
-                            counter++;
+                            counterBU++;
                             int B = rule[0];
                             int C = rule[1];
                             if (table[B][start][split] && table[C][split][end]) {
@@ -107,7 +110,7 @@ public class Parser {
 
         boolean result;
         if (i == j - 1) {
-            counter++;
+            counterTD++;
             char terminal = charArray[i];
             List<String> terminalRules = theGrammar.getTerminalRules(terminal);
             result = terminalRules.contains(theGrammar.getNonterminalString(S));
@@ -118,7 +121,7 @@ public class Parser {
                 int B = rule[0];
                 int C = rule[1];
                 for (int k = i + 1; k < j; k++) {
-                    counter++;
+                    counterTD++;
                     if (parseTD(B, i, k) && parseTD(C, k, j)) {
                         result = true;
                         break;
