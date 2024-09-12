@@ -26,15 +26,22 @@ public class Parser {
         theGrammar = grammar;
         counterNaive = 0;
         counterBU = 0;
-        counterNaive = 0;
+        counterTD = 0;
     }
 
     private void parse(String string) {
         charArray = string.toCharArray();
         int n = charArray.length;
-        int S = theGrammar.getNonterminalInt(theGrammar.getFirstNonterminal());
+        int S = theGrammar.convertNonterminalToInt(theGrammar.getFirstNonterminal());
         if (charArray != null && n != 0) {
-            parseNaive(S, 0, n);
+            if (parseNaive(S, 0, n) && parseBU(S, 0, n) && parseTD(S, 0, n)) {
+                System.out.println("String belongs to given grammar");
+                System.out.println("Naive operations: " + counterNaive);
+                System.out.println("Bottom up operations: " + counterBU);
+                System.out.println("Top down operations: " + counterTD);
+            } else {
+                System.out.println("String does not belong to given grammar");
+            }
         }
     }
 
@@ -43,7 +50,7 @@ public class Parser {
             counterNaive++;
             char terminal = charArray[i];
             List<String> terminalRules = theGrammar.getTerminalRules(terminal);
-            return terminalRules.contains(theGrammar.getNonterminalString(S));
+            return terminalRules.contains(theGrammar.convertIntToNonterminal(S));
         } else {
             List<int[]> nonterminalRules = theGrammar.getNonterminalRules(S);
             for (int[] rule : nonterminalRules) {
@@ -94,7 +101,7 @@ public class Parser {
             char terminal = charArray[s];
             List<String> terminalRules = theGrammar.getTerminalRules(terminal);
             for (String nonterminal : terminalRules) {
-                int A = theGrammar.getNonterminalInt(nonterminal);
+                int A = theGrammar.convertNonterminalToInt(nonterminal);
                 table[A][s][s + 1] = true;
             }
         }
@@ -113,7 +120,7 @@ public class Parser {
             counterTD++;
             char terminal = charArray[i];
             List<String> terminalRules = theGrammar.getTerminalRules(terminal);
-            result = terminalRules.contains(theGrammar.getNonterminalString(S));
+            result = terminalRules.contains(theGrammar.convertIntToNonterminal(S));
         } else {
             result = false;
             List<int[]> nonterminalRules = theGrammar.getNonterminalRules(S);

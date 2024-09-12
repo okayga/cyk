@@ -30,6 +30,7 @@ public class Main {
             System.exit(1);
         }
 
+        Grammar grammar = new ConcreteGrammar(grammarFile);
 
     }
 }
