@@ -28,6 +28,8 @@ public abstract class Grammar {
         fillAllRules(file);
     }
 
+    // Initializes the "rules" with the rules specified in the grammar from the input file
+    // TODO: need to change the datatypes of the "rules"  to improve performance and make rest of code reflect the changes
     private void fillAllRules(File file) {
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
@@ -46,7 +48,7 @@ public abstract class Grammar {
                 }
 
                 if (!nonterminalToInt.containsKey(lhs)) {
-                    nonterminalToInt.
+                    nonterminalToInt.put(lhs, nonterminalRules.);
                 }
                 int lhsInt = nonterminalToInt.get(lhs);
 
