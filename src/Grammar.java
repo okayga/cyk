@@ -1,18 +1,8 @@
 import java.io.File;
 import java.util.*;
 
-/*
-An abstract datatype Grammar that can be subclassed by specifying the rules of a context-free gram-
-mar in Chomsky normal form. The class should allow efficient access to the rules, where efficiency
-should be judged relative to the way in which the rules are accessed in the CYK algorithm. In par-
-ticular, it is probably a good idea to represent the terminal rules separately from the nonterminal
-ones. Moreover, I suggest to translate the nonterminals into integers while initializing the internal
-data structures. In this way, one may for example represent a right-hand side as a pair of integers,
-and can implement the set of nonterminal rules as an array of arrays of right-hand sides. Then, if a
-given nonterminal i has n nonterminal rules, one can efficiently loop over their right-hand sides as
-rule[i][j] for j = 0, . . . , n − 1 (and one can loop over all rules by additionally looping over i).
-*/
-
+// TODO: need to change the datatypes of the "rules" to improve performance and make rest of code reflect the changes
+// ^ primarily make sure that arraylist works as is to be able to loop as nonterminalRules[i][j]
 public abstract class Grammar {
      private final Map<String, String> terminalRules;
      private final ArrayList<ArrayList<String>> nonterminalRules;
@@ -29,7 +19,6 @@ public abstract class Grammar {
     }
 
     // Initializes the "rules" with the rules specified in the grammar from the input file
-    // TODO: need to change the datatypes of the "rules"  to improve performance and make rest of code reflect the changes
     private void fillAllRules(File file) {
         try (Scanner scanner = new Scanner(file)) {
             while (scanner.hasNextLine()) {
